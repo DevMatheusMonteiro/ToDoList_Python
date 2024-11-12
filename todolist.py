@@ -4,9 +4,10 @@ def addTarefa(lista, tarefa):
             print("Erro: tarefa nula ou vazio.")
         else:
             lista.append(tarefa)
-def concluirTarefa(lista):
-    
-
-
-
-tarefas = [{codigo: 1, nome: "Lavar o banheiro", concluida: True}]
+def encontrarPorCodigo(lista,codigo):
+    list(filter(lambda x: x["codigo"] == codigo,lista))[0]
+def concluirTarefa(lista, codigo):
+    tarefa = encontrarPorCodigo(lista,codigo)
+    return tarefa
+tarefas = [{"codigo": 1, "descrição": "Estudar python", "concluido": True}]
+print(concluirTarefa(tarefas,1))
