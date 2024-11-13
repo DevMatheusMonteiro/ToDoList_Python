@@ -5,29 +5,35 @@ def entrarDescricao():
             print("Erro: descrição da tarefa nula ou vazia.")
         else:
             return descricao
-def entrarCodigo():
+def entrarNumero(texto):
     while True:
         try:
-            codigo = int(input("Entre com o código da tarefa: "))
-            return codigo
+            numero = int(input(texto))
+            return numero
         except:
-            print("Erro: código da tarefa inválido.")
+            print("Erro: número inválido.")
+def definirValorCodigo(lista):
+    if len(lista) == 0:
+        return 1
+    return lista[len(lista)-1]["codigo"]+1
 def addTarefa(lista):
-    codigo = lista[len(lista)-1]["codigo"]+1
+    codigo = definirValorCodigo(lista)
     descricao = entrarDescricao()
-    tarefa = {"codigo": codigo, "descricao": descricao, "concluida": False}
+    tarefa = {"codigo": codigo, "descricao": descricao, "concluido": False}
     lista.append(tarefa)
 def removerTarefa(lista):
-    codigo = entrarCodigo()
-    tarefa = encontrarPorCodigo(lista,codigo)
+    tarefa = encontrarPorCodigo(lista)
+    if(tarefa == None):
+        return print("Erro: tarefa não encontrada!")
     lista.remove(tarefa)
-def encontrarPorCodigo(lista,codigo):
+def encontrarPorCodigo(lista):
+    codigo = entrarNumero("Entre com o código da tarefa: ")
     elemento = list(filter(lambda x: x["codigo"] == codigo,lista))
     if(len(elemento) == 0):
         return None
     return elemento[0]
-def concluirTarefa(lista, codigo):
-    tarefa = encontrarPorCodigo(lista,codigo)
+def concluirTarefa(lista):
+    tarefa = encontrarPorCodigo(lista)
     if(tarefa == None):
         return print("Erro: tarefa não encontrada!")
     tarefa["concluido"] = True
@@ -38,7 +44,39 @@ def filtrarTarefasConcluidas(lista):
 def listarTarefas(lista):
     for tarefa in lista:
         print(tarefa)
-
+def menuListar(lista):
+    while True:
+        escolha = entrarNumero("1 - Listar todas as tarefas\n2 - Listar tarefas concluídas\n3 - Listar tarefas pendentes\nEscolha: ")
+        if escolha == 1:
+            for tarefa in lista:
+                print(tarefa)
+            break
+        elif escolha == 2:
+            for tarefa in filtrarTarefasConcluidas(lista):
+                print(tarefa)
+            break
+        elif escolha == 3:
+            for tarefa in filtrarTarefasPendentes(lista):
+                print(tarefa)
+            break
+        else:
+            print("Escolha inválida!")
+def menu(lista):
+    while True:
+        escolha = entrarNumero("1 - Adicionar Tarefa\n2 - Listar Tarefas\n3 - Marcar Tarefa como Concluída\n4 - Remover Tarefa\n0 - Encerrar\nEscolha: ")
+        if escolha == 1:
+            addTarefa(lista)
+        elif escolha == 2:
+            menuListar(lista)
+        elif escolha == 3:
+            concluirTarefa(lista)
+        elif escolha == 4:
+            removerTarefa(lista)
+        elif escolha == 0:
+            print("Encerrado!")
+            break
+        else:
+            print("Escolha inválida!")
 
 tarefas = [
     {"codigo": 1, "descricao": "Estudar Python", "concluido": False},
@@ -72,8 +110,5 @@ tarefas = [
     {"codigo": 29, "descricao": "Estudar programação funcional", "concluido": True},
     {"codigo": 30, "descricao": "Praticar lógica com listas encadeadas", "concluido": False}
 ]
-print(listarTarefas(tarefas))
-print("****************************")
-print(listarTarefas(filtrarTarefasConcluidas(tarefas)))
-print("****************************")
-print(listarTarefas(filtrarTarefasPendentes(tarefas)))
+
+menu(tarefas)
