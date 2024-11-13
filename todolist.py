@@ -1,14 +1,79 @@
-def addTarefa(lista, tarefa):
+def entrarDescricao():
     while True:
-        if(tarefa == None | tarefa.strip() == ""):
-            print("Erro: tarefa nula ou vazia.")
+        descricao = input("Entre com a descrição da tarefa: ")
+        if(descricao == None or descricao.strip() == ""):
+            print("Erro: descrição da tarefa nula ou vazia.")
         else:
-            lista.append(tarefa)
+            return descricao
+def entrarCodigo():
+    while True:
+        try:
+            codigo = int(input("Entre com o código da tarefa: "))
+            return codigo
+        except:
+            print("Erro: código da tarefa inválido.")
+def addTarefa(lista):
+    codigo = lista[len(lista)-1]["codigo"]+1
+    descricao = entrarDescricao()
+    tarefa = {"codigo": codigo, "descricao": descricao, "concluida": False}
+    lista.append(tarefa)
+def removerTarefa(lista):
+    codigo = entrarCodigo()
+    tarefa = encontrarPorCodigo(lista,codigo)
+    lista.remove(tarefa)
 def encontrarPorCodigo(lista,codigo):
-    return list(filter(lambda x: x["codigo"] == codigo,lista))[0]
+    elemento = list(filter(lambda x: x["codigo"] == codigo,lista))
+    if(len(elemento) == 0):
+        return None
+    return elemento[0]
 def concluirTarefa(lista, codigo):
     tarefa = encontrarPorCodigo(lista,codigo)
+    if(tarefa == None):
+        return print("Erro: tarefa não encontrada!")
     tarefa["concluido"] = True
-tarefas = [{"codigo": 1, "descrição": "Estudar python", "concluido": False}]
-concluirTarefa(tarefas,1)
-print(tarefas)
+def filtrarTarefasPendentes(lista):
+    return list(filter(lambda x:x["concluido"]==False,lista))
+def filtrarTarefasConcluidas(lista):
+    return list(filter(lambda x:x["concluido"]==True,lista))
+def listarTarefas(lista):
+    for tarefa in lista:
+        print(tarefa)
+
+
+tarefas = [
+    {"codigo": 1, "descricao": "Estudar Python", "concluido": False},
+    {"codigo": 2, "descricao": "Ler um capítulo de livro", "concluido": True},
+    {"codigo": 3, "descricao": "Praticar exercícios de lógica", "concluido": False},
+    {"codigo": 4, "descricao": "Revisar conceitos de POO", "concluido": False},
+    {"codigo": 5, "descricao": "Assistir vídeo sobre APIs", "concluido": True},
+    {"codigo": 6, "descricao": "Resolver problemas no LeetCode", "concluido": False},
+    {"codigo": 7, "descricao": "Aprender sobre listas em Python", "concluido": True},
+    {"codigo": 8, "descricao": "Escrever resumo de aula", "concluido": False},
+    {"codigo": 9, "descricao": "Estudar Flask", "concluido": False},
+    {"codigo": 10, "descricao": "Ler sobre SQL", "concluido": True},
+    {"codigo": 11, "descricao": "Praticar uso de dicionários", "concluido": False},
+    {"codigo": 12, "descricao": "Testar funções em Python", "concluido": True},
+    {"codigo": 13, "descricao": "Implementar algoritmo de ordenação", "concluido": False},
+    {"codigo": 14, "descricao": "Estudar Django", "concluido": False},
+    {"codigo": 15, "descricao": "Fazer resumo sobre MVC", "concluido": True},
+    {"codigo": 16, "descricao": "Praticar com listas e tuplas", "concluido": False},
+    {"codigo": 17, "descricao": "Aprender sobre módulos e pacotes", "concluido": True},
+    {"codigo": 18, "descricao": "Escrever função recursiva", "concluido": False},
+    {"codigo": 19, "descricao": "Assistir tutorial sobre SQLAlchemy", "concluido": False},
+    {"codigo": 20, "descricao": "Estudar variáveis globais e locais", "concluido": True},
+    {"codigo": 21, "descricao": "Revisar manipulação de strings", "concluido": False},
+    {"codigo": 22, "descricao": "Ler artigo sobre Big Data", "concluido": True},
+    {"codigo": 23, "descricao": "Estudar testes unitários", "concluido": False},
+    {"codigo": 24, "descricao": "Fazer projeto pessoal em Python", "concluido": False},
+    {"codigo": 25, "descricao": "Explorar bibliotecas externas", "concluido": True},
+    {"codigo": 26, "descricao": "Escrever documentação de código", "concluido": False},
+    {"codigo": 27, "descricao": "Fazer curso sobre Pandas", "concluido": True},
+    {"codigo": 28, "descricao": "Implementar CRUD em SQL", "concluido": False},
+    {"codigo": 29, "descricao": "Estudar programação funcional", "concluido": True},
+    {"codigo": 30, "descricao": "Praticar lógica com listas encadeadas", "concluido": False}
+]
+print(listarTarefas(tarefas))
+print("****************************")
+print(listarTarefas(filtrarTarefasConcluidas(tarefas)))
+print("****************************")
+print(listarTarefas(filtrarTarefasPendentes(tarefas)))
