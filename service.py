@@ -1,43 +1,57 @@
-from util import definirValorCodigo,entrarDescricao,entrarNumero
+""" Camada que implementa as regras de negócio da aplicação """
+from datetime import datetime
+import util
 import repository
-def encontrarPorCodigo():
-    codigo = entrarNumero("Entre com o código da tarefa: ")
-    tarefa = repository.encontrarPorCodigo(codigo)
+def encontrarPorId():
+    """ Função que encontra tarefa por id e a retorna """
+    id = util.entrarNumero("Entre com o id da tarefa: ")
+    tarefa = repository.encontrarPorId(id)
     if(len(tarefa) == 0):
         return None
     return tarefa[0]
 def addTarefa():
-    codigo = definirValorCodigo()
-    descricao = entrarDescricao()
-    tarefa = {"codigo": codigo, "descricao": descricao, "concluido": False}
+    """ Função que adicionará uma nova tarefa """
+    id = util.definirValorId()
+    descricao = util.entrarDescricao()
+    data_criacao = util.dataParaString(datetime.today())
+    prazo_final = util.validarData()
+    tarefa = {"id": id, "descricao": descricao, "concluido": False, "data_criacao": data_criacao, "prazo_final": prazo_final}
     repository.addTarefa(tarefa)
+    print("Tarefa adicionada!")
 def removerTarefa():
-    tarefa = encontrarPorCodigo()
+    """ Função que removerá uma tarefa """
+    tarefa = encontrarPorId()
     if(tarefa == None):
         return print("Erro: tarefa não encontrada!")
     repository.removerTarefa(tarefa)
+    print("Tarefa removida!")
 def concluirTarefa():
-    tarefa = encontrarPorCodigo()
+    """ Função que concluirá uma tarefa """
+    tarefa = encontrarPorId()
     if(tarefa == None):
         return print("Erro: tarefa não encontrada!")
     repository.concluirTarefa(tarefa)
+    print("Tarefa concluída!")
 def consultarTarefas():
+    """ Função que permite consultar todas as tarefas, tarefas concluídas e tarefas pendentes """
+    tarefas = []
     while True:
-        escolha = entrarNumero("1 - Listar todas as tarefas\n" +
-                               "2 - Listar tarefas concluídas\n" +
-                               "3 - Listar tarefas pendentes\n" +
-                               "Escolha: ")
+        escolha = util.entrarNumero("1 - Listar todas as tarefas\n" +
+                                    "2 - Listar tarefas concluídas\n" +
+                                    "3 - Listar tarefas pendentes\n" +
+                                    "Escolha: ")
         if escolha == 1:
-            for tarefa in repository.todasTarefas():
-                print(tarefa)
+            tarefas = repository.todasTarefas()
             break
         elif escolha == 2:
-            for tarefa in repository.tarefasConcluidas():
-                print(tarefa)
+            tarefas = repository.tarefasConcluidas()
             break
         elif escolha == 3:
-            for tarefa in repository.tarefasPendentes():
-                print(tarefa)
+            tarefas = repository.tarefasPendentes()
             break
         else:
             print("Escolha inválida!")
+    if len(tarefas) == 0:
+        return print("Nenhuma tarefa encontrada!")
+    for tarefa in tarefas:
+        print(tarefa)
