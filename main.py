@@ -1,6 +1,8 @@
+""" Arquivo principal que irá executar a aplicação """
 from util import entrarNumero
 import service
 def menu():
+    """ Função que mostrará um menu ao usuário com as opções de adicionar tarefa, marcar tarefa como concluída, consultar tarefas, remover tarefa """
     while True:
         escolha = entrarNumero("1 - Adicionar Tarefa\n" + 
                                 "2 - Listar Tarefas\n" +
