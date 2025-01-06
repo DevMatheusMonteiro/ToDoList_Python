@@ -1,1 +1,81 @@
-__pycache__
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+env/
+venv/
+ENV/
+.env
+.venv
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+.cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# PyCharm
+.idea/
+*.iml
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehshell.dl_
+
+# Logs
+*.log
+*.tlog
+*.out
+*.err
+
+# dotenv
+.env
+
+# mypy
+.mypy_cache/
+.dmypy.json
+
+# Profiling data
+.prof
+
+# Pyre
+.pyre/
+
+# Other IDEs and editors
+*.swp
+*.swo
+*.swn
+*.bak
+*.tmp
+*.orig
+*.patch
+*.rej
