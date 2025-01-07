@@ -8,7 +8,7 @@ def removerTarefa(tarefa):
     tarefas.remove(tarefa)
 def encontrarPorId(id):
     """ Função para encontrar uma tarefa pelo id """
-    return list(filter(lambda tarefa: tarefa["id"] == id,tarefas))
+    return next((tarefa for tarefa in tarefas if tarefa["id"] == id),None)
 def tarefasPendentes():
     """ Função que retornará tarefas pendentes """
     return list(filter(lambda x:x["concluido"]==False,tarefas))

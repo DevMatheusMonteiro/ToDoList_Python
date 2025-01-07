@@ -1,14 +1,14 @@
 """ Camada que implementa as regras de negócio da aplicação """
 from datetime import datetime
 import util
-import repository
+import src.repositories.repository as repository
 def encontrarPorId():
     """ Função que encontra tarefa por id e a retorna """
     id = util.entrarNumero("Entre com o id da tarefa: ")
     tarefa = repository.encontrarPorId(id)
-    if(len(tarefa) == 0):
+    if not tarefa:
         return None
-    return tarefa[0]
+    return tarefa
 def addTarefa():
     """ Função que adicionará uma nova tarefa """
     id = util.definirValorId()
