@@ -1,5 +1,5 @@
 """ Camada intermediária entre a aplicação e a fonte de dados """
-from mock import tarefas
+from ..mock import tarefas
 def addTarefa(tarefa):
     """ Função para adicionar tarefa à fonte de dados """
     tarefas.append(tarefa)
